@@ -1,0 +1,140 @@
+package com.ab.controllers;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.ab.entities.BankAccount;
+import com.ab.entities.CurrentAccount;
+import com.ab.entities.Customer;
+import com.ab.entities.SavingsAccount;
+import com.ab.services.AccountService;
+import com.ab.services.CustomerService;
+
+@Controller
+public class AccountController {
+	
+	@Autowired
+	private AccountService accountService;
+	
+	@GetMapping("/createAccount")
+	public String createAccount() {
+		return "create_account";
+	}
+
+	//////////////////////////////////////////
+	@PostMapping("/createCurrentAccount")
+	public String createCurrentAccount(String accountName, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(true);
+		
+		
+		Customer loggedInCustomer = (Customer) session.getAttribute("loggedInCustomer");
+		
+		CurrentAccount a = new CurrentAccount(loggedInCustomer.getCustomerId(), accountName);
+		
+		CurrentAccount b = this.accountService.saveCurrentAccount(a);
+		
+		session.setAttribute("currentAccount", b);
+	
+	
+		return "new_current";
+	}
+	
+	////////////////////////////////////////
+	@PostMapping("/createSavingsAccount")
+	public String createSavingsAccount(String accountName, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(true);
+		
+		
+		Customer loggedInCustomer = (Customer) session.getAttribute("loggedInCustomer");
+		System.out.println(loggedInCustomer);
+		
+		SavingsAccount a = new SavingsAccount(loggedInCustomer.getCustomerId(), accountName);
+		
+		SavingsAccount b = this.accountService.saveSavingsAccount(a);
+	
+		session.setAttribute("savingsAccount", b);
+		
+		return "new_savings";
+	
+	}
+	
+	/////////////////////////////////////
+	@GetMapping("/accounts")
+	public String getCustomerAccounts(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(true);
+		Customer loggedInCustomer = (Customer) session.getAttribute("loggedInCustomer");
+		
+		List<CurrentAccount> currentAccounts = accountService.loadCurrentAccounts(loggedInCustomer.getCustomerId());
+		session.setAttribute("currentAccountList", currentAccounts);
+		
+		
+		List<SavingsAccount> savingsAccounts = accountService.loadSavingsAccounts(loggedInCustomer.getCustomerId());
+		session.setAttribute("savingsAccountList", savingsAccounts);
+		
+		return "accounts";
+		
+	}
+	
+	
+	@PostMapping("/accounts")
+	public String viewCurrentAccount(HttpServletRequest request, String accountToViewNumber, String accountToViewType){
+		
+
+		HttpSession session = request.getSession(true);
+		session.setAttribute("accountToViewNumber", accountToViewNumber);
+		session.setAttribute("accountToViewType",accountToViewType);
+		
+		if (accountToViewType.equals("Cur")) {
+			
+			CurrentAccount ca = accountService.findCurrentAccountByNumber(accountToViewNumber);
+			session.setAttribute("currentAccountToView", ca);
+			
+			return "view_current_account";
+			
+		}
+		else if (accountToViewType.equals("Sav")) {
+			
+			SavingsAccount sa = accountService.findSavingsAccountByNumber(accountToViewNumber);
+			session.setAttribute("savingsAccountToView", sa);
+			
+			return "view_savings_account";
+			
+		}
+		
+		return "accounts";
+		
+	}
+	
+	//////////////////////////////////
+
+	@PostMapping("/deposit")
+	public String depositCurrentAccount(HttpServletRequest request, double money){
+		
+
+		HttpSession session = request.getSession(true);
+		String accountToViewNumber = (String) session.getAttribute("accountToViewNumber");
+		CurrentAccount currentAccountToView = (CurrentAccount) session.getAttribute("currentAccountToView");
+			
+		accountService.depositMoneyCurrent(money, accountToViewNumber);
+		currentAccountToView.depositMoney(money);
+		session.setAttribute("currentAccountToView", currentAccountToView);
+		
+			return "view_current_account";
+			
+		}
+		
+}

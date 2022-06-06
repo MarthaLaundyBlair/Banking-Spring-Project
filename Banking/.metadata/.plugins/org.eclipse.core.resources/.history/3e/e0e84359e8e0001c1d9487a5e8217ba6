@@ -1,0 +1,18 @@
+package com.ab.entities;
+
+import javax.persistence.Entity;
+
+@Entity
+public class CurrentAccount extends BankAccount {
+	
+
+	public CurrentAccount (int customerId, String accountName) {
+		
+		super(customerId, accountName);
+		//this.accountNumber = "Cur" + accountNumber;
+		
+	}
+	
+
+
+}

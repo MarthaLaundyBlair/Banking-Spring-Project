@@ -1,0 +1,43 @@
+package com.ab.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ab.entities.BankAccount;
+import com.ab.entities.CurrentAccount;
+import com.ab.entities.Customer;
+import com.ab.entities.SavingsAccount;
+import com.ab.repositories.BankAccountRepository;
+import com.ab.repositories.CurrentAccountRepository;
+import com.ab.repositories.CustomerRepository;
+import com.ab.repositories.SavingsAccountRepository;
+
+@Service
+public class AccountService {
+	
+	@Autowired
+	private CurrentAccountRepository currentAccountRepository;
+
+	@Autowired
+	private SavingsAccountRepository savingsAccountRepository;
+	
+	// Write Business methods/logic
+	
+	public CurrentAccount saveCurrentAccount(CurrentAccount account) {
+		
+		return this.currentAccountRepository.save(account);
+		
+	}
+
+public SavingsAccount saveSavingsAccount(SavingsAccount account) {
+		
+		return this.savingsAccountRepository.save(account);
+		
+	}
+	
+	
+	
+
+}

@@ -1,0 +1,18 @@
+package com.ab.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ab.repositories.CurrentAccountRepository;
+import com.ab.repositories.SavingsAccountRepository;
+
+public class TransactionService {
+	
+	@Autowired
+	private CurrentAccountRepository currentAccountRepository;
+
+	@Autowired
+	private SavingsAccountRepository savingsAccountRepository;
+	
+	
+
+}

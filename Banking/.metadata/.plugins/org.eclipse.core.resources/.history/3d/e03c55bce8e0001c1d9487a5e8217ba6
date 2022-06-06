@@ -1,0 +1,16 @@
+package com.ab.entities;
+
+import javax.persistence.Entity;
+
+@Entity
+public class SavingsAccount extends BankAccount {
+	
+public SavingsAccount (int customerId, String accountName) {
+		
+		super(customerId, accountName);
+		//this.accountNumber = "Sav" + accountNumber;
+		
+	}
+
+
+}

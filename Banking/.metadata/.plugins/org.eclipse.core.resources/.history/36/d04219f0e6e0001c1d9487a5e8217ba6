@@ -1,0 +1,32 @@
+package com.ab.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ab.entities.BankAccount;
+import com.ab.entities.Customer;
+import com.ab.repositories.BankAccountRepository;
+import com.ab.repositories.CustomerRepository;
+
+@Service
+public class AccountService {
+	
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
+	
+	
+	// Write Business methods/logic
+	
+	public BankAccount saveAccount(BankAccount account) {
+		
+		return this.bankAccountRepository.save(account);
+		
+	}
+
+	
+	
+	
+
+}

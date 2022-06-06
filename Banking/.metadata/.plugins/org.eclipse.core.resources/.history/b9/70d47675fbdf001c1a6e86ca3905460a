@@ -1,0 +1,28 @@
+package com.ab.entities;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@Entity
+public class BankAccount {
+	private String accountNumber;
+	private String firstName;
+	private String lastName;
+	private Double balance;
+	private LocalDateTime dateOpened;
+	
+	
+
+}
