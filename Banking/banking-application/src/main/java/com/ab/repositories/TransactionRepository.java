@@ -12,7 +12,7 @@ import com.ab.entities.Transaction;
 
 @Repository
 public interface TransactionRepository  extends JpaRepository<Transaction, Integer> {
-	
+
 	@Query(value = "SELECT * FROM transaction t where t.account_number = :accountNumber", nativeQuery=true) 
 	List<Transaction> findByNumber(@Param("accountNumber") String accountNumber);
 

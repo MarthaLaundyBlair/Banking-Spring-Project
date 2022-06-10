@@ -84,6 +84,7 @@ Account Number : <%= " " + account.getAccountNumber() %> <br><br>
 Account Name : <%= " " + account.getAccountName() %> <br><br>
 Balance : <%= " " + account.getBalance() %> <br><br>
 Date Opened : <%= " " + account.getDateOpened() %> <br><br>
+Level : <%= account.getPoints() - 1 %> <br><br>
 
 
 	<form action="/depositSavings" method="POST">

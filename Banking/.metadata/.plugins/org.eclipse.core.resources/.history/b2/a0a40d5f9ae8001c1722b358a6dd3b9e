@@ -1,0 +1,37 @@
+package com.ab.controllers;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.ab.entities.Transaction;
+import com.ab.services.TransactionService;
+
+@Controller
+public class TransferController {
+
+	@Autowired
+	private TransactionService transactionService;
+
+	@GetMapping("/transfer")
+	public String transferPageLoad() {
+		
+
+		return "transfer";
+	}
+	
+	@PostMapping
+	public void transfer(HttpServletRequest request, double money, String accountNumberTransferTo) {
+		
+	}
+	
+	
+
+
+}

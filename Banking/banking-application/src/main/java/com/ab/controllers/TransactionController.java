@@ -1,41 +1,34 @@
 package com.ab.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ab.entities.CurrentAccount;
-import com.ab.entities.SavingsAccount;
-import com.ab.services.AccountService;
+
+import com.ab.entities.Transaction;
 import com.ab.services.TransactionService;
 
+@Controller
 public class TransactionController {
-	/*
-	@Autowired
-	private AccountService accountService;
-	
+
 	@Autowired
 	private TransactionService transactionService;
 
-	
-	@PostMapping("/deposit")
-	public String depositCurrentAccount(HttpServletRequest request, double money){
-		
-
+	@GetMapping("/view_transactions")
+	public String loadTransactions(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		String accountToViewNumber = (String) session.getAttribute("accountToViewNumber");
-		CurrentAccount currentAccountToView = (CurrentAccount) session.getAttribute("currentAccountToView");
-			
-		accountService.depositMoneyCurrent(money, accountToViewNumber);
-		currentAccountToView.depositMoney(money);
-		session.setAttribute("currentAccountToView", currentAccountToView);
-		
-			return "view_current_account";
-			
-		}
-		
-		*/
+		List<Transaction> accountTransactions = transactionService.loadAccountTransactions(accountToViewNumber);
 
+		session.setAttribute("accountTransactions", accountTransactions);
+
+		return "view_transactions";
 	}
+
+
+}

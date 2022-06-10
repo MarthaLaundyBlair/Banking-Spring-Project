@@ -18,18 +18,18 @@ import lombok.ToString;
 @ToString
 @Entity
 public class Customer {
-	
+
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customerId;	
-	
+
 	private String firstname;
-	
+
 	private String lastname;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private String email;
-	
+
 }

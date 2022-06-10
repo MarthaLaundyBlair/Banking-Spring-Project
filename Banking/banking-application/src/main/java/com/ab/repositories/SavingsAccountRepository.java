@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ab.entities.CurrentAccount;
+
 import com.ab.entities.SavingsAccount;
 
 @Repository
@@ -17,7 +17,7 @@ public interface SavingsAccountRepository  extends JpaRepository<SavingsAccount,
 
 	@Query(value = "SELECT * FROM savings_account s where s.customer_id = :customerId", nativeQuery=true) 
 	List<SavingsAccount> findByCustomer(@Param("customerId") int customerId);
-	
+
 	@Query(value = "SELECT * FROM savings_account c where c.account_number = :accountNumber", nativeQuery=true) 
 	SavingsAccount findByNumber(@Param("accountNumber") String accountNumber);
 
@@ -33,9 +33,9 @@ public interface SavingsAccountRepository  extends JpaRepository<SavingsAccount,
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE savings_account s SET s.points = s.points + 1 WHERE s.account_number = :accountNumber", nativeQuery=true)
-	int updatePoints( @Param("accountNumber") String accountNumber );
+	@Query(value = "UPDATE savings_account s SET s.points = :newPoints WHERE s.account_number = :accountNumber", nativeQuery=true)
+	int updatePoints( @Param("accountNumber") String accountNumber,   @Param("newPoints") int newPoints);
 
-	
-	
+
+
 }
